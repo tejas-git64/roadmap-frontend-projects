@@ -5,3 +5,39 @@ body {
 	padding: 0;
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0px 20px;
+}
+
+nav ul {
+	width: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	list-style: none;
+	text-decoration: none;
+	padding: 5px;
+}
+
+nav ul li a {
+	text-decoration: none;
+	color: black;
+}
+
+nav ul li::after {
+	content: "/";
+	padding-left: 12px;
+}
+
+nav ul li:nth-child(4)::after {
+	content: none;
+}
+
+footer {
+	width: 100%;
+	text-align: center;
+}
