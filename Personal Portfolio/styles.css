@@ -104,7 +104,6 @@ nav {
 }
 
 /*Home page*/
-/* .hero h1, */
 .hero {
 	text-align: center;
 	line-height: 0.5;
@@ -115,7 +114,7 @@ nav {
 		padding: 120px 0;
 	}
 	p {
-		color: #ababab;
+		color: #767676;
 		text-align: center;
 	}
 }
@@ -435,13 +434,13 @@ footer {
 				width: 30%;
 			}
 			header {
-				color: #c6c6c6;
+				color: #767676;
 				padding-top: 0;
 				cite {
 					font-style: inherit;
 				}
 				p {
-					color: #c6c6c6;
+					color: #767676;
 					padding: 0;
 					text-align: left;
 				}
