@@ -30,20 +30,22 @@
                 <li><a href="./contact.html">Contact</a></li>
             </ul>
         </nav>
-        <section>
+        <section class="form-container">
+            <h1>Contact me</h1>
             <form action="">
                 <label for="name">
-                    Enter name
-                    <input type="text" name="name" id="name" placeholder="Enter your name">
+                    Name
+                    <input type="text" name="name" id="name" placeholder="Ex: John Doe" autocomplete="name">
                 </label>
                 <label for="email">
-                    Enter email
-                    <input type="email" name="email" id="email" placeholder="Enter your email">
+                    Email address
+                    <input type="email" name="email" id="email" placeholder="Ex: JohnDoe123@gmail.com"
+                        autocomplete="email">
                 </label>
                 <label for="message">
-                    Enter message
+                    Message
                 </label>
-                <textarea id="message" placeholder="Enter your message"></textarea>
+                <textarea id="message" placeholder="Enter your message" autocomplete="on"></textarea>
                 <button type="submit">Submit</button>
             </form>
         </section>
