@@ -1,3 +1,5 @@
 ## Testimonial Cards
 
-A display of various layouts on testimonials.
+
+![Testimonial_cards](testimonial_cards.png)
+A display of various layouts for testimonial cards.
