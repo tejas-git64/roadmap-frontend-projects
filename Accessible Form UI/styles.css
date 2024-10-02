@@ -7,7 +7,7 @@ body {
 	place-items: center;
 	background-color: #eeeeee;
 	overflow: hidden;
-	font-family: sans-serif;
+	font-family: "Poppins", sans-serif;
 }
 
 h2,
@@ -17,4 +17,144 @@ p {
 	padding: 0;
 	margin: 0;
 	font-weight: normal;
+}
+
+.form-container {
+	width: 90%;
+	max-width: 750px;
+	display: flex;
+	height: 350px;
+	max-height: auto;
+	justify-content: space-evenly;
+	align-items: center;
+	background-color: white;
+	padding: 30px 0px;
+	border-radius: 15px;
+	overflow: hidden;
+	form {
+		width: 320px;
+		display: flex;
+		justify-content: flex-start;
+		flex-direction: column;
+		margin-bottom: 25px;
+		label {
+			font-size: 0.75rem;
+			font-weight: 500;
+			margin-top: 10px;
+			color: #252525;
+		}
+		input {
+			font-family: "Poppins", sans-serif;
+			border-radius: 5px;
+			border: 1px solid #d7d7d7;
+			padding: 6px 8px;
+			font-size: 0.8rem;
+			font-weight: 500;
+		}
+		input::placeholder {
+			color: #a5a5a5;
+			font-size: 0.75rem;
+		}
+		input[type="password"]::placeholder {
+			letter-spacing: 1px;
+		}
+		#fullname:focus:valid ~ .name-error,
+		#email:focus:valid ~ .email-error,
+		#pass:focus:valid ~ .pass-error,
+		#cpass:focus:valid ~ .cpass-error {
+			display: none;
+		}
+		#fullname:focus:invalid:empty,
+		#email:focus:invalid:empty,
+		#pass:focus:invalid:empty,
+		#cpass:focus:empty {
+			outline: 1px solid;
+			outline-color: #d50000;
+		}
+		#fullname:focus:invalid:empty ~ .name-error,
+		#email:focus:invalid:empty ~ .email-error,
+		#pass:focus:invalid:empty ~ .pass-error,
+		#cpass:focus:empty ~ .cpass-error {
+			display: block;
+		}
+		p {
+			font-size: 0.65rem;
+			color: #d50000;
+			font-weight: 500;
+			display: none;
+			padding-left: 10px;
+		}
+		button {
+			border: none;
+			font-family: "Poppins", sans-serif;
+			background-color: #252525;
+			padding: 8px 0;
+			color: white;
+			font-weight: 550;
+			border-radius: 5px;
+			font-size: 0.8rem;
+			margin-top: 30px;
+		}
+	}
+	#progress {
+		width: 250px;
+		border: 1px solid #d7d7d7;
+		border-radius: 15px;
+		height: auto;
+		padding: 10px;
+		text-align: center;
+		position: relative;
+		h2 {
+			font-size: 0.9rem;
+			font-weight: 550;
+		}
+		svg {
+			margin: 10px auto;
+			transform: rotate(-90deg);
+			.fg {
+				stroke-dasharray: 282.6;
+				stroke-dashoffset: 183.69;
+				transition: stroke-dashoffset 0.5s ease;
+				animation: progress-animation 1s forwards;
+			}
+			.percentage {
+				position: absolute;
+				transform-origin: center;
+				transform: rotate(90deg);
+			}
+		}
+		ul {
+			width: 70%;
+			list-style: none;
+			margin: 20px auto;
+			padding: 10px;
+			border-radius: 10px;
+			text-align: center;
+			background-color: #dcffd8;
+			li {
+				p {
+					font-size: 0.7rem;
+					margin: 5px 0px;
+					font-weight: 500;
+					text-wrap: nowrap;
+					text-align: center;
+					color: black;
+					text-align: left;
+				}
+				.done {
+					text-decoration: line-through;
+					color: #168309;
+				}
+			}
+		}
+	}
+}
+
+@keyframes progress-animation {
+	from {
+		stroke-dashoffset: 282.6; /* Start with no progress */
+	}
+	to {
+		stroke-dashoffset: 100;
+	}
 }
