@@ -8,7 +8,9 @@
     <li><b><a href="https://roadmap.sh/projects/testimonial-cards">Testimonial Cards</a></b></li>
     <li><b><a href="https://roadmap.sh/projects/datepicker-ui">Datepicker UI</a></b></li>
     <li><b><a href="https://roadmap.sh/projects/accessible-form-ui">Accessible Form UI</a></b>
-    </li><li><b><a href="https://roadmap.sh/projects/image-grid">Image Grid Layout</a></b></li>
+    </li>
+    <li><b><a href="https://roadmap.sh/projects/image-grid">Image Grid Layout</a></b></li>
+    <li><b><a href="https://roadmap.sh/projects/tooltip-ui">Tooltip UI</a></b></li>
 </ol>
 
 ### Instructions to run
