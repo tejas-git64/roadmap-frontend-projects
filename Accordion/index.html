@@ -3,18 +3,63 @@
 
     <head>
         <meta charset="UTF-8">
+        <meta name="description" content="A simple accordion component">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
             href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="preload" as="style">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet">
+        <link rel="preload" href="./styles.css" as="style">
         <link rel="stylesheet" href="./styles.css">
         <title>Accordion</title>
     </head>
 
     <body>
-
+        <section class="accordion">
+            <header>
+                <h2>Frequently Asked Questions</h2>
+                <p>Here are some of the frequently asked questions</p>
+            </header>
+            <div class="faqs">
+                <div class="faq expanded">
+                    <div class="question">
+                        <p>What is roadmap.sh?</p>
+                        <button type="button" class="faq-btn"><img src="./assets/down-arrow-5-svgrepo-com.svg"
+                                width="25" height="25" alt="arrow"></button>
+                    </div>
+                    <p class="answer">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore sequi quisquam
+                        rerum
+                        laudantium id a impedit, delectus, exercitationem provident odio suscipit dolore eum quas ipsam.
+                        Eveniet, eaque? Maxime, enim ullam.</p>
+                </div>
+                <div class="faq">
+                    <div class="question">
+                        <p>What are the plans for roadmap.sh?</p>
+                        <button type="button" class="faq-btn"><img src="./assets/down-arrow-5-svgrepo-com.svg"
+                                width="25" height="25" alt="arrow"></button>
+                    </div>
+                    <p class="answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, facere unde possimus
+                        assumenda quasi facilis iure ullam quibusdam saepe beatae at cupiditate sit quia exercitationem
+                        numquam tempore quisquam ea! Ab.</p>
+                </div>
+                <div class="faq">
+                    <div class="question">
+                        <p>How is roadmap.sh built?</p>
+                        <button type="button" class="faq-btn"><img src="./assets/down-arrow-5-svgrepo-com.svg"
+                                width="25" height="25" alt="arrow"></button>
+                    </div>
+                    <p class="answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia quae doloribus
+                        ipsum, vel officiis veniam ratione itaque nihil minus recusandae odit iure perferendis
+                        accusantium
+                        atque, molestias iusto neque tempore facilis.</p>
+                </div>
+            </div>
+        </section>
+        <script src="./script.js"></script>
     </body>
 
 </html>
