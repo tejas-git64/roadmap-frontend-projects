@@ -1,6 +1,19 @@
 const acceptBtn = document.querySelector(".accept-btn");
 const denyBtn = document.querySelector(".deny-btn");
 const cookieDialog = document.querySelector(".cookie-box");
+const closeBtn = document.querySelector(".close-btn");
+
+closeBtn.addEventListener("click", () => {
+	if (cookieDialog.classList.contains("intro-animation")) {
+		cookieDialog.classList.remove("intro-animation");
+		setTimeout(() => {
+			cookieDialog.classList.add("fade-animation");
+		}, 100);
+	}
+	setTimeout(() => {
+		cookieDialog.style.display = "none";
+	}, 500);
+});
 
 acceptBtn.addEventListener("click", () => {
 	localStorage.setItem(

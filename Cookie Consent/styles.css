@@ -89,6 +89,9 @@ body {
 .outro-animation {
 	animation: reveal 1s reverse ease-in;
 }
+.fade-animation {
+	animation: fadeOut 1s ease;
+}
 
 @keyframes reveal {
 	0% {
@@ -100,5 +103,16 @@ body {
 		clip-path: circle(100%);
 		transform: scale(1);
 		box-shadow: 0 0 10px #333;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+		visibility: visible;
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
 	}
 }
