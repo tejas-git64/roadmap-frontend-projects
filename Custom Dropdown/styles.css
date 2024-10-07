@@ -12,3 +12,85 @@ body {
 	display: grid;
 	place-items: center;
 }
+
+.dropdown {
+	width: auto;
+	height: auto;
+	.toggle {
+		width: 250px;
+		height: 20px;
+		background-color: white;
+		padding: 6px 2.5px 6px 7.5px;
+		margin-bottom: 5px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-radius: 5px;
+		box-shadow: 0 0 10px #ccc;
+		cursor: pointer;
+		font-size: 0.8rem;
+		img {
+			transform: rotate(0deg);
+			transition: transform 0.15s ease;
+		}
+	}
+	.clicked {
+		img {
+			transform: rotate(180deg);
+		}
+	}
+	.dropdown-list {
+		width: 260px;
+		height: auto;
+		background-color: white;
+		border-radius: 5px;
+		font-weight: 500;
+		color: #5b5b5b;
+		font-size: 0.75rem;
+		box-shadow: 0 0 10px #ccc;
+		overflow: hidden;
+		border: none;
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility 0.15s ease, opacity 0.15s ease;
+		font-family: "Poppins", sans-serif;
+		.list-item {
+			width: 250px;
+			font-weight: 500;
+			padding: 5px;
+			border-bottom: 1px solid #eee;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			overflow: hidden;
+			p {
+				font-size: 0.75rem;
+				padding-left: 1px;
+			}
+			img {
+				width: 15px;
+				height: 15px;
+				margin-bottom: -1px;
+				margin-left: auto;
+				visibility: hidden;
+				transition: visibility 0.15s ease;
+			}
+		}
+		.selected {
+			img {
+				visibility: visible;
+			}
+		}
+		.list-item:hover {
+			background-color: #6d6d6d;
+			color: white;
+			img {
+				filter: invert(1) contrast(150%);
+			}
+		}
+	}
+	.visible {
+		visibility: visible;
+		opacity: 1;
+	}
+}
