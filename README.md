@@ -15,6 +15,7 @@
     <li><b><a href="https://roadmap.sh/projects/cookie-consent">Cookie Consent</a></b></li>
     <li><b><a href="https://roadmap.sh/projects/restricted-textarea">Restricted Area</a></b></li>
     <li><b><a href="https://roadmap.sh/projects/accordion">Accordion</a></b></li>
+    <li><b><a href="https://roadmap.sh/projects/custom-dropdown">Custom Dropdown</a></b></li>
 </ol>
 
 ### Instructions to run
