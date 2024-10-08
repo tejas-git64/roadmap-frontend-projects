@@ -16,6 +16,7 @@
     <li><b><a href="https://roadmap.sh/projects/restricted-textarea">Restricted Area</a></b></li>
     <li><b><a href="https://roadmap.sh/projects/accordion">Accordion</a></b></li>
     <li><b><a href="https://roadmap.sh/projects/custom-dropdown">Custom Dropdown</a></b></li>
+    <li><b><a href="https://roadmap.sh/projects/task-tracker-js">Task Tracker</a></b></li>
 </ol>
 
 ### Instructions to run
