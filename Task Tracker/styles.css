@@ -3,12 +3,110 @@
 	margin: 0;
 }
 
+input,
+button {
+	font-family: "Poppins", sans-serif;
+	cursor: pointer;
+}
+
 body {
 	width: 100%;
-	height: 80dvh;
+	height: 100dvh;
 	overflow: hidden;
 	background-color: #eee;
 	font-family: "Poppins", sans-serif;
 	display: grid;
 	place-items: center;
+}
+
+.container {
+	width: 400px;
+	height: auto;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	.task-input {
+		width: 100%;
+		height: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 10px;
+		overflow: hidden;
+		box-shadow: 0 0 10px #ccc;
+		input[type="text"] {
+			width: 340px;
+			padding: 10px 20px 10px 10px;
+			border: none;
+			outline: none;
+			font-weight: 500;
+			cursor: text;
+		}
+		button {
+			background-color: black;
+			padding: 7.5px 10px 3px 10px;
+			border: none;
+			outline: none;
+			border-radius: 10px;
+			margin-left: -10px;
+			transition: disabled 0.25s ease;
+			cursor: pointer;
+		}
+		button[type="button"]:disabled {
+			background-color: #343434;
+			cursor: not-allowed;
+		}
+	}
+	.tasks {
+		/* width: auto; */
+		padding: 8px;
+		list-style: none;
+		height: auto;
+		.task {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.task-state {
+				width: 335px;
+				height: auto;
+				padding: 5px 10px;
+				background-color: white;
+				display: flex;
+				align-items: center;
+				border-radius: 5px;
+				box-shadow: 0 0 5px #ccc;
+				transition: background-color 0.5s ease-in;
+				input[type="checkbox"] {
+					width: 13px;
+					height: 13px;
+					margin-right: 10px;
+					accent-color: green;
+				}
+				label {
+					width: 300px;
+					font-size: 0.8rem;
+					font-weight: 500;
+					color: #343434;
+					text-align: left;
+					transition: color 0.5s ease;
+				}
+			}
+			.task-state.completed {
+				background-color: #e0ffe0;
+				label {
+					text-decoration: line-through;
+					color: green;
+				}
+			}
+			button {
+				border: none;
+				margin-top: 5px;
+				img {
+					width: 25px;
+					height: 25px;
+				}
+			}
+		}
+	}
 }
