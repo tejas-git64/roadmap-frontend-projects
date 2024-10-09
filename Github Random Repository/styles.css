@@ -1,10 +1,10 @@
 * {
 	padding: 0;
 	margin: 0;
+	font-family: "Poppins", sans-serif;
 }
 
 button {
-	font-family: "Poppins", sans-serif;
 	cursor: pointer;
 }
 
@@ -12,8 +12,168 @@ body {
 	width: 100%;
 	height: 100dvh;
 	overflow: hidden;
-	background-color: #eee;
-	font-family: "Poppins", sans-serif;
+	background-color: #ffffff;
 	display: grid;
 	place-items: center;
+}
+
+.container {
+	width: 75%;
+	max-width: 320px;
+	height: 80dvh;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	border-radius: 15px;
+	padding: 15px 10px;
+	header {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			width: 30px;
+			height: 30px;
+			margin-right: 15px;
+			margin-left: -10px;
+		}
+		h3 {
+			font-weight: 550;
+			font-size: 1rem;
+		}
+	}
+	#lang-select {
+		width: 320px;
+		padding: 8px 0;
+		padding-left: 12px;
+		margin: 20px auto;
+		border-radius: 10px;
+		border: none;
+		background-color: #ececec;
+		font-weight: 600;
+		color: #000000;
+		outline: none;
+		box-shadow: inset 0 0 5px #ddd;
+	}
+	.repo-container {
+		width: 320px;
+		height: auto;
+		border-radius: 10px;
+		.repo {
+			box-shadow: 0 0 10px #ddd;
+			border-radius: 10px;
+			padding: 10px 15px;
+			background-color: white;
+			border: 1px solid #e1e1e1;
+			display: none;
+			overflow: hidden;
+			text-decoration: none;
+			h4 {
+				margin-bottom: 10px;
+				text-wrap: wrap;
+				overflow: hidden;
+				color: black;
+			}
+			p {
+				width: 100%;
+				height: auto;
+				font-size: 0.75rem;
+				text-align: left;
+				font-weight: 500;
+				color: #858585;
+				text-wrap: wrap;
+				overflow: hidden;
+			}
+			.repo-info {
+				height: 20px;
+				margin-top: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				.repo-lang,
+				.repo-stars,
+				.repo-forks,
+				.repo-issues {
+					width: auto;
+					display: flex;
+					align-items: center;
+					img {
+						width: 15px;
+						height: 15px;
+						filter: invert(0.35);
+						margin-right: 2px;
+					}
+					small {
+						font-size: 0.75rem;
+						color: #4a4a4a;
+						font-weight: 500;
+					}
+				}
+				.repo-lang {
+					.lang-color {
+						width: 12px;
+						height: 12px;
+						background-color: #445258;
+						margin-right: 3px;
+						border-radius: 50%;
+					}
+				}
+				.repo-forks {
+					small {
+						margin-bottom: 1px;
+					}
+				}
+			}
+		}
+		.fallback {
+			width: 100%;
+			height: 150px;
+			display: none;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			background-color: #ececec;
+			border-radius: 10px;
+			p {
+				font-size: 0.85rem;
+				font-weight: 500;
+				color: #000000;
+				margin: 15px 0 5px 0;
+			}
+		}
+		.refresh {
+			width: 100%;
+			border: none;
+			margin: 20px 0;
+			background-color: black;
+			padding: 8px 10px;
+			border-radius: 10px;
+			display: none;
+			transition: transform 0.25s ease;
+			span {
+				width: auto;
+				font-size: 0.85rem;
+				color: white;
+				font-weight: 550;
+			}
+			img {
+				width: 20px;
+				height: 20px;
+				margin-bottom: -4px;
+				margin-left: 10px;
+				margin-right: -10px;
+			}
+		}
+		.refresh:active {
+			transform: translateY(-2px);
+			transform: scale(0.97);
+		}
+	}
+}
+
+
+p {
+	color: #445258;
 }

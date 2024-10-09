@@ -14,7 +14,45 @@
     </head>
 
     <body>
-
+        <section class="container">
+            <header>
+                <img src="./assets/github-svgrepo-com.svg" alt="github-img" width="30" height="30">
+                <h3>Github Repository Finder</h3>
+            </header>
+            <select name="lang-select" id="lang-select">
+                <option value="select">Select</option>
+            </select>
+            <div class="repo-container">
+                <a href="#" class="repo">
+                    <h4 class="repo-heading"></h4>
+                    <p class="repo-desc"></p>
+                    <div class="repo-info">
+                        <div class="repo-lang">
+                            <div class="lang-color"></div>
+                            <small class="lang-info"></small>
+                        </div>
+                        <div class="repo-stars">
+                            <img src="./assets/star-svgrepo-com.svg" alt="repo-icon"><small class="star-count"></small>
+                        </div>
+                        <div class="repo-forks">
+                            <img src="./assets/fork-svgrepo-com.svg" alt="repo-icon"><small class="fork-count"></small>
+                        </div>
+                        <div class="repo-issues">
+                            <img src="./assets/exclamation-circle-svgrepo-com.svg" alt="repo-icon"><small
+                                class="issue-count" </small>
+                        </div>
+                    </div>
+                </a>
+                <div class="fallback">
+                    <img src="" class="fallback-img" alt="repo-icon" width="25" height="25">
+                    <p class="fallback-info"></p>
+                </div>
+                <button type="button" class="refresh"><span>Refresh</span><img
+                        src="./assets/refresh-cw-alt-3-svgrepo-com.svg" width="25" height="25"
+                        alt="refresh-icon"></button>
+            </div>
+        </section>
+        <script src="./script.js" type="text/javascript"></script>
     </body>
 
 </html>
