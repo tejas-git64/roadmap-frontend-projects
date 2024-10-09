@@ -1,0 +1,18 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-family: "Poppins", sans-serif;
+}
+
+button {
+	cursor: pointer;
+}
+
+body {
+	width: 100%;
+	height: 100dvh;
+	overflow: hidden;
+	background-color: #ffffff;
+	display: grid;
+	place-items: center;
+}
