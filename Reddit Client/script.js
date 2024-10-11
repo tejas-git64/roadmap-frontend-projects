@@ -36,32 +36,44 @@ async function fetchSubReddit(sub) {
 				statusBox.textContent = "Content unavailable ¯_(ツ)_/¯";
 			}
 		} else {
-			const sub = await res.json();
-			const data = sub.data;
+			const json = await res.json();
+			const data = json.data;
 			if (data) {
-				const rData = {
-					subreddit: newSub,
-					url: `https://www.reddit.com/r/${newSub}`,
-					posts: data.children.map((post) => {
-						const data = post.data;
-						return {
-							id: data.id,
-							title: data.title,
-							author: data.author_fullname,
-							ups: data.ups,
-							post_url: data.url,
-						};
-					}),
-				};
-				console.log(rData);
-				statusBox.style.visibility = "visible";
-				statusBox.style.opacity = 1;
-				statusBox.textContent = "Subreddit found!";
-				statusBox.style.color = "green";
-				inputBox.style.outline = "1px solid green";
-				inputBox.style.color = "green";
-				subredditData.push(rData);
-				renderSubreddit();
+				const children = data.children.map((post) => {
+					const data = post.data;
+					return {
+						id: data.id,
+						title: data.title,
+						author: data.author_fullname,
+						ups: data.ups,
+						post_url: data.url,
+					};
+				});
+				const isFound = subredditData.findIndex((obj) => obj.subreddit === sub);
+				if (isFound > -1) {
+					subredditData[isFound].posts = children;
+					const loading = document
+						.getElementById(`${sub}`)
+						.querySelector(`.loading`);
+					loading.style.display = "flex";
+					setTimeout(() => {
+						loading.style.display = "none";
+					}, 500);
+				} else {
+					statusBox.style.visibility = "visible";
+					statusBox.style.opacity = 1;
+					statusBox.textContent = "Subreddit found!";
+					statusBox.style.color = "#00df56";
+					inputBox.style.outline = "1px solid #00df56";
+					inputBox.style.color = "#00df56";
+					const rData = {
+						subreddit: newSub,
+						url: `https://www.reddit.com/r/${newSub}`,
+						posts: children,
+					};
+					subredditData.push(rData);
+					createSubreddit(rData);
+				}
 				setTimeout(() => {
 					dialog.style.visibility = "hidden";
 					dialog.style.opacity = 0;
@@ -69,7 +81,7 @@ async function fetchSubReddit(sub) {
 					inputBox.style.outline = "none";
 					inputBox.style.color = "black";
 					inputBox.value = "";
-				}, 1000);
+				}, 500);
 			} else {
 				statusBox.style.visibility = "visible";
 				statusBox.style.opacity = 1;
@@ -107,7 +119,11 @@ inputBox.addEventListener("input", (e) => {
 	statusBox.textContent = "";
 	statusBox.style.color = "none";
 	inputBox.style.outline = "none";
-	inputBox.style.color = "white";
+	if (document.body.classList.contains("dark-theme")) {
+		inputBox.style.color = "white";
+	} else {
+		inputBox.style.color = "black";
+	}
 	newSub = e.target.value;
 	if (e.target.value.trim() === "") {
 		newSubBtn.disabled = true;
@@ -120,6 +136,9 @@ addBtn.addEventListener("click", () => {
 	dialog.style.visibility = "visible";
 	dialog.style.opacity = 1;
 	newSubBtn.disabled = true;
+	setTimeout(() => {
+		inputBox.focus();
+	}, 200);
 });
 
 dialog.firstElementChild.addEventListener("submit", (e) => {
@@ -128,9 +147,6 @@ dialog.firstElementChild.addEventListener("submit", (e) => {
 closeBtn.addEventListener("click", () => {
 	dialog.style.visibility = "hidden";
 	dialog.style.opacity = 0;
-	// statusBox.style.visibility = "hidden";
-	// statusBox.style.opacity = 0;
-	// statusBox.textContent = "";
 	inputBox.style.outline = "none";
 	inputBox.style.color = "none";
 	inputBox.value = "";
@@ -144,14 +160,13 @@ newSubBtn.addEventListener("click", () => {
 	}
 });
 
-function renderSubreddit() {
-	subrContainer.innerHTML = "";
-	subredditData.forEach((obj, i) => {
+function createSubreddit(obj) {
+	if (obj) {
 		//Subreddit
 		const subReddit = document.createElement("div");
 		subReddit.setAttribute("class", "subreddit");
 		subReddit.setAttribute("id", obj.subreddit);
-		subReddit.style.animationDuration = `${0.85 + i * 0.1}s`;
+		subReddit.style.animationDuration = "0.85s";
 		const header = document.createElement("header");
 		const subrTitle = document.createElement("h4");
 		subrTitle.setAttribute("class", "subr-title");
@@ -184,6 +199,7 @@ function renderSubreddit() {
 		refreshBtn.append(span1);
 		refreshBtn.addEventListener("click", () => {
 			menuContainer.classList.toggle("reveal");
+			fetchSubReddit(obj.subreddit);
 		});
 		const delBtn = document.createElement("button");
 		delBtn.setAttribute("type", "button");
@@ -204,7 +220,7 @@ function renderSubreddit() {
 				subredditData = subredditData.filter(
 					(data) => data.subreddit !== obj.subreddit
 				);
-				renderSubreddit();
+				removeSubreddit(obj.subreddit);
 			}, 830);
 		});
 		menuContainer.append(refreshBtn);
@@ -250,7 +266,27 @@ function renderSubreddit() {
 			ul.append(li);
 		});
 		subReddit.append(ul);
+		const loading = document.createElement("div");
+		loading.setAttribute("class", "loading");
+		const loadingText = document.createElement("p");
+		loadingText.textContent = "loading...";
+		loading.append(loadingText);
+		subReddit.append(loading);
 		subrContainer.append(subReddit);
-	});
+	}
+	setTimeout(() => {
+		subrContainer.scrollLeft =
+			subrContainer.scrollWidth - subrContainer.clientWidth;
+	}, 850);
 }
-renderSubreddit();
+
+function removeSubreddit(subr) {
+	const index = subredditData.findIndex((sub) => sub.subreddit === subr);
+	if (index === -1) {
+		subredditData.splice(index, 1);
+		const subReddit = document.getElementById(`sub`);
+		if (subReddit) {
+			subrContainer.removeChild(subReddit);
+		}
+	}
+}

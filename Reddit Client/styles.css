@@ -298,8 +298,8 @@ nav {
 				margin: 0 auto;
 				outline: none;
 				background-color: #ddd;
-				transition: background-color 0.35s ease-in, color 0.35s ease-in,
-					outline 0.25s ease;
+				transition: background-color 0.35s ease-in, color 0.25s ease-in,
+					outline 0.15s ease;
 				@media (min-width: 640px) {
 					width: 91.5%;
 				}
@@ -347,7 +347,8 @@ nav {
 	}
 	.subreddit-container {
 		width: 100%;
-		height: 88dvh;
+		height: 85dvh;
+		max-height: 93.5%;
 		border-radius: 10px;
 		overflow: hidden;
 		background-color: #e4e4e4;
@@ -356,6 +357,7 @@ nav {
 		align-items: flex-start;
 		justify-content: flex-start;
 		overflow-x: scroll;
+		scroll-behavior: smooth;
 		transition: border 0.25s ease-in, background-color 0.35s ease-in;
 		@media (min-width: 2160px) {
 			width: 100%;
@@ -369,8 +371,10 @@ nav {
 			justify-content: space-between;
 			align-items: center;
 			overflow-x: hidden;
+			border-radius: 5px;
 			background-color: #eee;
 			flex-shrink: 0;
+			position: relative;
 			animation: fadeInRight 0.5s ease;
 			transition: border-right 0.25s ease-in, background-color 0.35s ease;
 			header {
@@ -520,6 +524,20 @@ nav {
 			.posts::-webkit-scrollbar {
 				width: 0px;
 				background-color: transparent;
+			}
+			.loading {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background-color: white;
+				display: none;
+				justify-content: center;
+				align-items: center;
+				p {
+					font-weight: 500;
+				}
 			}
 		}
 		.removed {
