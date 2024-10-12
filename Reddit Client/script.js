@@ -66,9 +66,10 @@ async function fetchSubReddit(sub) {
 						posts: children,
 					};
 					subredditData.push(rData);
+					updateLocalStorage(sub, 1);
+					subredditArr.add(newSub || sub);
 					createSubreddit(rData);
 				}
-				subredditArr.add(newSub || sub);
 				setTimeout(() => {
 					dialog.style.visibility = "hidden";
 					dialog.style.opacity = 0;
@@ -76,7 +77,6 @@ async function fetchSubReddit(sub) {
 					inputBox.style.outline = "none";
 					inputBox.style.color = "black";
 					inputBox.value = "";
-					localStorage.setItem("subs", [...subredditArr]);
 				}, 500);
 			} else {
 				statusBox.style.visibility = "visible";
@@ -169,9 +169,9 @@ newSubBtn.addEventListener("click", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
 	const saveFound = localStorage.getItem("subs");
-	if (saveFound) {
+	if (saveFound && saveFound !== "") {
 		const localSubs = saveFound.split(",");
-		if (localSubs.length === 0) {
+		if (localSubs.length < 1) {
 			subrFallback.style.visibility = "visible";
 			subrFallback.style.opacity = 1;
 		} else {
@@ -181,6 +181,10 @@ window.addEventListener("DOMContentLoaded", () => {
 			subrFallback.style.visibility = "hidden";
 			subrFallback.style.opacity = 0;
 		}
+	} else {
+		subrFallback.style.visibility = "visible";
+		subrFallback.style.opacity = 1;
+		localStorage.setItem("subs", []);
 	}
 });
 
@@ -193,6 +197,23 @@ function refreshPosts(obj) {
 			const li = createPost(post);
 			postContainer.append(li);
 		});
+	}
+}
+
+function updateLocalStorage(sub, op) {
+	const saveFound = localStorage.getItem("subs");
+	if (saveFound !== null) {
+		const subArr = saveFound.split(",");
+		// 0 - remove Item, 1 - add Item
+		if (op === 0) {
+			const index = subArr.indexOf(sub);
+			subArr.splice(index, 1);
+			localStorage.setItem("subs", subArr);
+		} else {
+			subArr.push(sub);
+			const newArr = new Set(subArr);
+			localStorage.setItem("subs", [...newArr]);
+		}
 	}
 }
 
@@ -369,11 +390,10 @@ function removeSubreddit(subr) {
 		}
 	}
 	setTimeout(() => {
+		updateLocalStorage(subr, 0);
 		if (subredditData.length === 0) {
 			subrFallback.style.visibility = "visible";
 			subrFallback.style.opacity = 1;
 		}
-		//Removes the deleted item from localStorage
-		localStorage.setItem("subs", [...subredditArr]);
 	}, 250);
 }
