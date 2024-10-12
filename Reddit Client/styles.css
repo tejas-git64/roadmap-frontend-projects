@@ -119,23 +119,45 @@ body {
 						}
 					}
 				}
-				.posts {
-					background-color: transparent;
-					.post {
-						background-color: #444;
-						border-bottom: 1px solid #000;
-						.upvote {
-							.upvotes {
-								color: white;
+				.post-container {
+					.posts {
+						background-color: transparent;
+						.post {
+							background-color: #444;
+							border-bottom: 1px solid #000;
+							.upvote {
+								.upvotes {
+									color: white;
+								}
+							}
+							header {
+								.post-name {
+									color: white;
+									font-weight: 550;
+								}
+								.post-user {
+									color: #e4e4e4;
+								}
 							}
 						}
-						header {
-							.post-name {
-								color: white;
-								font-weight: 550;
+					}
+					.loading {
+						background-color: transparent;
+						.loading-post {
+							background-color: #444;
+							border-bottom: 1px solid #000;
+							.loading-count {
+								.loading-counter {
+									background-color: #aaa;
+								}
 							}
-							.post-user {
-								color: #e4e4e4;
+							.loading-header {
+								.loading-user {
+									background-color: #888;
+								}
+								.loading-post {
+									background-color: #888;
+								}
 							}
 						}
 					}
@@ -358,9 +380,31 @@ nav {
 		justify-content: flex-start;
 		overflow-x: scroll;
 		scroll-behavior: smooth;
+		position: relative;
 		transition: border 0.25s ease-in, background-color 0.35s ease-in;
 		@media (min-width: 2160px) {
 			width: 100%;
+		}
+		.subr-fallback {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-color: transparent;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			visibility: hidden;
+			opacity: 0;
+			transition: visibility 0.25s ease, opacity 0.25s ease;
+			p {
+				font-size: 1.15rem;
+				font-weight: 600;
+				color: #888;
+				margin: 5px 0;
+			}
 		}
 		.subreddit {
 			width: 330px;
@@ -374,7 +418,6 @@ nav {
 			border-radius: 5px;
 			background-color: #eee;
 			flex-shrink: 0;
-			position: relative;
 			animation: fadeInRight 0.5s ease;
 			transition: border-right 0.25s ease-in, background-color 0.35s ease;
 			header {
@@ -417,7 +460,8 @@ nav {
 						top: 30px;
 						visibility: hidden;
 						opacity: 0;
-						transition: visibility 0.25s ease-in, opacity 0.25s ease;
+						z-index: 10;
+						transition: visibility 0.25s ease, opacity 0.25s ease;
 						border: 1px solid #d3d3d3;
 						button {
 							width: 100%;
@@ -449,25 +493,108 @@ nav {
 					}
 				}
 			}
-			.posts {
+			.post-container {
 				width: 100%;
-				height: 100%;
-				margin: 0 auto;
-				display: flex;
-				overflow-y: scroll;
-				overflow-x: hidden;
-				flex-direction: column;
-				justify-content: flex-start;
-				align-items: flex-start;
-				background-color: #e9e9e9;
-				li {
+				height: 85dvh;
+				margin: 0;
+				overflow: hidden;
+				position: relative;
+				.posts {
 					width: 100%;
-					height: auto;
-					background-color: transparent;
-					transition: background-color 0.35s ease-in;
-					.post {
+					height: 85dvh;
+					margin: 0 auto;
+					display: flex;
+					overflow-y: scroll;
+					overflow-x: hidden;
+					flex-direction: column;
+					justify-content: flex-start;
+					align-items: flex-start;
+					position: relative;
+					background-color: #e9e9e9;
+					li {
 						width: 100%;
 						height: auto;
+						background-color: transparent;
+						transition: background-color 0.35s ease-in;
+						.post {
+							width: 100%;
+							height: auto;
+							text-decoration: none;
+							display: flex;
+							justify-content: flex-start;
+							align-items: center;
+							border-bottom: 1px solid #ccc;
+							background-color: #f6f6f6;
+							padding: 5px 0;
+							overflow: hidden;
+							transition: background-color 0.25s ease-in, border 0.25s ease-in,
+								color 0.25s ease-in;
+							.upvote {
+								width: 50px;
+								height: auto;
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								justify-content: center;
+								flex-shrink: 0;
+								img {
+									margin-bottom: -3px;
+								}
+								.upvotes {
+									color: black;
+									font-size: 0.75rem;
+									font-weight: 550;
+								}
+							}
+							header {
+								width: 260px;
+								display: flex;
+								padding: 5px 0;
+								border: none;
+								flex-direction: column;
+								justify-content: flex-start;
+								align-items: center;
+								.post-name {
+									width: 100%;
+									height: auto;
+									flex-shrink: 0;
+									color: #333;
+									font-size: 0.75rem;
+									text-align: left;
+								}
+								.post-user {
+									width: 100%;
+									font-weight: 500;
+									font-size: 0.65rem;
+									color: #656565;
+								}
+							}
+						}
+					}
+				}
+				.posts::-webkit-scrollbar {
+					width: 0px;
+					background-color: transparent;
+				}
+				.loading {
+					width: 100%;
+					height: fit-content;
+					margin: 0 auto;
+					display: flex;
+					overflow: hidden;
+					flex-direction: column;
+					justify-content: flex-start;
+					align-items: flex-start;
+					position: relative;
+					position: absolute;
+					top: 0;
+					left: 0;
+					display: none;
+					flex-shrink: 0;
+					background-color: #e9e9e9;
+					.loading-post {
+						width: 100%;
+						height: 50px;
 						text-decoration: none;
 						display: flex;
 						justify-content: flex-start;
@@ -476,67 +603,55 @@ nav {
 						background-color: #f6f6f6;
 						padding: 5px 0;
 						overflow: hidden;
-						transition: background-color 0.25s ease-in, border 0.25s ease-in,
-							color 0.25s ease-in;
-						.upvote {
+						.loading-count {
 							width: 50px;
-							height: auto;
+							height: 50px;
 							display: flex;
 							flex-direction: column;
 							align-items: center;
 							justify-content: center;
 							flex-shrink: 0;
 							img {
-								margin-bottom: -3px;
+								width: 20px;
+								height: 20px;
+								margin-top: -4px;
 							}
-							.upvotes {
-								color: black;
-								font-size: 0.75rem;
-								font-weight: 550;
+							.loading-counter {
+								width: 30px;
+								height: 15px;
+								background-color: #c5c5c5;
+								border-radius: 5px;
 							}
 						}
-						header {
+						.loading-header {
 							width: 260px;
+							height: 50px;
 							display: flex;
 							padding: 5px 0;
-							border: none;
 							flex-direction: column;
-							justify-content: flex-start;
-							align-items: center;
-							.post-name {
-								width: 100%;
-								height: auto;
-								flex-shrink: 0;
-								color: #333;
-								font-size: 0.75rem;
-								text-align: left;
+							justify-content: space-evenly;
+							align-items: flex-start;
+							.loading-user {
+								width: 140px;
+								height: 10px;
+								background-color: #ddd;
+								padding: 0;
+								border-radius: 10px;
 							}
-							.post-user {
-								width: 100%;
-								font-weight: 500;
-								font-size: 0.65rem;
-								color: #656565;
+							.loading-post {
+								width: 250px;
+								height: 12px;
+								background-color: #ddd;
+								padding: 0;
+								border-radius: 5px;
+								border: none;
 							}
 						}
 					}
 				}
-			}
-			.posts::-webkit-scrollbar {
-				width: 0px;
-				background-color: transparent;
-			}
-			.loading {
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				background-color: white;
-				display: none;
-				justify-content: center;
-				align-items: center;
-				p {
-					font-weight: 500;
+				.loading::-webkit-scrollbar {
+					width: 0px;
+					background-color: transparent;
 				}
 			}
 		}

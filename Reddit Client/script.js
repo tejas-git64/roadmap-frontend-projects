@@ -11,13 +11,13 @@ inputBox.value = newSub;
 let subredditData = [];
 const subrContainer = document.querySelector(".subreddit-container");
 const subreddits = document.querySelectorAll(".subreddit");
+const subrFallback = document.querySelector(".subr-fallback");
 let subredditArr = ["developersIndia"];
 
 async function fetchSubReddit(sub) {
 	try {
 		const res = await fetch(`https://www.reddit.com/r/${sub}.json`);
 		if (!res.ok) {
-			// error = "This subreddit does not exist!";
 			statusBox.style.visibility = "visible";
 			statusBox.style.opacity = 1;
 			inputBox.style.outline = "1px solid red";
@@ -52,13 +52,7 @@ async function fetchSubReddit(sub) {
 				const isFound = subredditData.findIndex((obj) => obj.subreddit === sub);
 				if (isFound > -1) {
 					subredditData[isFound].posts = children;
-					const loading = document
-						.getElementById(`${sub}`)
-						.querySelector(`.loading`);
-					loading.style.display = "flex";
-					setTimeout(() => {
-						loading.style.display = "none";
-					}, 500);
+					refreshPosts(subredditData[isFound]);
 				} else {
 					statusBox.style.visibility = "visible";
 					statusBox.style.opacity = 1;
@@ -160,6 +154,88 @@ newSubBtn.addEventListener("click", () => {
 	}
 });
 
+window.addEventListener("DOMContentLoaded", () => {
+	if (subredditData.length === 0) {
+		subrFallback.style.visibility = "visible";
+		subrFallback.style.opacity = 1;
+	} else {
+		subrFallback.style.visibility = "hidden";
+		subrFallback.style.opacity = 0;
+	}
+});
+
+function refreshPosts(obj) {
+	const subreddit = document.getElementById(`${obj.subreddit}`);
+	if (subreddit) {
+		const postContainer = subreddit.querySelector(".posts");
+		postContainer.innerHTML = "";
+		obj.posts.forEach((post) => {
+			const li = createPost(post);
+			postContainer.append(li);
+		});
+	}
+}
+
+function createPost(post) {
+	const li = document.createElement("li");
+	const a = document.createElement("a");
+	a.setAttribute("class", "post");
+	a.setAttribute("href", post.post_url);
+	a.setAttribute("target", "_blank");
+	const upvote = document.createElement("div");
+	upvote.setAttribute("class", "upvote");
+	const upvoteImg = document.createElement("img");
+	upvoteImg.src = "./assets/up-arrow-svgrepo-com.svg";
+	upvoteImg.alt = "upvote-icon";
+	upvoteImg.width = "20";
+	upvoteImg.height = "20";
+	const upvotes = document.createElement("p");
+	upvotes.setAttribute("class", "upvotes");
+	upvotes.innerHTML = post.ups;
+	upvote.append(upvoteImg);
+	upvote.append(upvotes);
+	const header2 = document.createElement("header");
+	const postName = document.createElement("h4");
+	postName.setAttribute("class", "post-name");
+	postName.innerHTML = post.title;
+	const postUser = document.createElement("p");
+	postUser.setAttribute("class", "post-user");
+	postUser.innerHTML = `u/${post.author}`;
+	header2.append(postUser);
+	header2.append(postName);
+	a.append(upvote);
+	a.append(header2);
+	li.append(a);
+	return li;
+}
+
+function createFallback() {
+	const lpost = document.createElement("div");
+	lpost.setAttribute("class", "loading-post");
+	const lc = document.createElement("div");
+	lc.setAttribute("class", "loading-count");
+	const img = document.createElement("img");
+	img.src = "./assets/up-arrow-svgrepo-com.svg";
+	img.alt = "upvote-icon";
+	img.width = "20";
+	img.height = "20";
+	const lcr = document.createElement("div");
+	lcr.setAttribute("class", "loading-counter");
+	lc.append(img);
+	lc.append(lcr);
+	const h = document.createElement("header");
+	h.setAttribute("class", "loading-header");
+	const u = document.createElement("div");
+	u.setAttribute("class", "loading-user");
+	const p = document.createElement("div");
+	p.setAttribute("class", "loading-post");
+	h.append(u);
+	h.append(p);
+	lpost.append(lc);
+	lpost.append(h);
+	return lpost;
+}
+
 function createSubreddit(obj) {
 	if (obj) {
 		//Subreddit
@@ -199,6 +275,10 @@ function createSubreddit(obj) {
 		refreshBtn.append(span1);
 		refreshBtn.addEventListener("click", () => {
 			menuContainer.classList.toggle("reveal");
+			loading.style.display = "flex";
+			setTimeout(() => {
+				loading.style.display = "none";
+			}, 1000);
 			fetchSubReddit(obj.subreddit);
 		});
 		const delBtn = document.createElement("button");
@@ -231,53 +311,32 @@ function createSubreddit(obj) {
 		});
 		header.append(menu);
 		subReddit.append(header);
+		const postContainer = document.createElement("div");
+		postContainer.setAttribute("class", "post-container");
 		const ul = document.createElement("ul");
 		ul.setAttribute("class", "posts");
-		obj.posts.forEach((post) => {
-			const li = document.createElement("li");
-			const a = document.createElement("a");
-			a.setAttribute("class", "post");
-			a.setAttribute("href", post.post_url);
-			a.setAttribute("target", "_blank");
-			const upvote = document.createElement("div");
-			upvote.setAttribute("class", "upvote");
-			const upvoteImg = document.createElement("img");
-			upvoteImg.src = "./assets/up-arrow-svgrepo-com.svg";
-			upvoteImg.alt = "upvote-icon";
-			upvoteImg.width = "20";
-			upvoteImg.height = "20";
-			const upvotes = document.createElement("p");
-			upvotes.setAttribute("class", "upvotes");
-			upvotes.innerHTML = post.ups;
-			upvote.append(upvoteImg);
-			upvote.append(upvotes);
-			const header2 = document.createElement("header");
-			const postName = document.createElement("h4");
-			postName.setAttribute("class", "post-name");
-			postName.innerHTML = post.title;
-			const postUser = document.createElement("p");
-			postUser.setAttribute("class", "post-user");
-			postUser.innerHTML = `u/${post.author}`;
-			header2.append(postUser);
-			header2.append(postName);
-			a.append(upvote);
-			a.append(header2);
-			li.append(a);
-			ul.append(li);
-		});
-		subReddit.append(ul);
 		const loading = document.createElement("div");
 		loading.setAttribute("class", "loading");
-		const loadingText = document.createElement("p");
-		loadingText.textContent = "loading...";
-		loading.append(loadingText);
-		subReddit.append(loading);
+		const lposts = Array.from({ length: 15 }, () => createFallback());
+		loading.append(...lposts);
+		ul.append(loading);
+		obj.posts.forEach((post) => {
+			const li = createPost(post);
+			ul.append(li);
+		});
+		postContainer.append(ul);
+		postContainer.append(loading);
+		subReddit.append(postContainer);
 		subrContainer.append(subReddit);
 	}
 	setTimeout(() => {
 		subrContainer.scrollLeft =
 			subrContainer.scrollWidth - subrContainer.clientWidth;
 	}, 850);
+	if (subredditData.length > 0) {
+		subrFallback.style.visibility = "hidden";
+		subrFallback.style.opacity = 0;
+	}
 }
 
 function removeSubreddit(subr) {
@@ -289,4 +348,10 @@ function removeSubreddit(subr) {
 			subrContainer.removeChild(subReddit);
 		}
 	}
+	setTimeout(() => {
+		if (subredditData.length === 0) {
+			subrFallback.style.visibility = "visible";
+			subrFallback.style.opacity = 1;
+		}
+	}, 250);
 }
