@@ -28,6 +28,50 @@ body {
 	.container {
 		padding: 0 2vw;
 	}
+	@media (min-width: 320px) and (max-width: 480px) {
+		padding: 0;
+		nav {
+			width: 95%;
+		}
+		.container {
+			width: 95%;
+			height: 90dvh;
+			margin: 0 auto;
+			.subreddit-container {
+				width: 100%;
+				margin: 0 auto;
+				.subreddit {
+					margin-right: 0;
+					width: 100%;
+				}
+			}
+		}
+		@keyframes fadeInRight {
+			0% {
+				visibility: hidden;
+				opacity: 0;
+				max-width: 165px;
+			}
+			100% {
+				visibility: visible;
+				opacity: 1;
+				max-width: 375px;
+			}
+		}
+
+		@keyframes fadeOutLeft {
+			0% {
+				visibility: visible;
+				opacity: 1;
+				max-width: 375px;
+			}
+			100% {
+				visibility: hidden;
+				opacity: 0;
+				max-width: 0px;
+			}
+		}
+	}
 	@media (min-width: 2160px) {
 		width: 98%;
 		max-width: auto;
@@ -85,6 +129,7 @@ body {
 			.subreddit {
 				background-color: #444;
 				border: none;
+				border-right: 1px solid #000;
 				header {
 					border-bottom: 1px solid #000;
 					.subr-title {
@@ -370,10 +415,8 @@ nav {
 		width: 100%;
 		height: 88dvh;
 		max-height: 93.5%;
-		/* border-radius: 10px; */
 		overflow: hidden;
 		background-color: transparent;
-		/* border: 1px solid #ccc; */
 		display: flex;
 		align-items: flex-start;
 		justify-content: flex-start;
@@ -410,7 +453,6 @@ nav {
 			width: 330px;
 			height: 100%;
 			border: 1px solid #ccc;
-			/* border-right: 2px solid #cecece; */
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
@@ -528,7 +570,6 @@ nav {
 							border-bottom: 1px solid #ccc;
 							background-color: #f6f6f6;
 							padding: 5px 0;
-							overflow: hidden;
 							transition: background-color 0.25s ease-in, border 0.25s ease-in,
 								color 0.25s ease-in;
 							.upvote {
@@ -667,7 +708,7 @@ nav {
 	}
 	.subreddit-container::-webkit-scrollbar-thumb {
 		height: 5px;
-		background: #c8c8c8;
+		background: transparent;
 	}
 }
 
