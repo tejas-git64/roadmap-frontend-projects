@@ -12,7 +12,7 @@ let subredditData = [];
 const subrContainer = document.querySelector(".subreddit-container");
 const subreddits = document.querySelectorAll(".subreddit");
 const subrFallback = document.querySelector(".subr-fallback");
-let subredditArr = ["developersIndia"];
+let subredditArr = new Set([]);
 
 async function fetchSubReddit(sub) {
 	try {
@@ -61,13 +61,14 @@ async function fetchSubReddit(sub) {
 					inputBox.style.outline = "1px solid #00df56";
 					inputBox.style.color = "#00df56";
 					const rData = {
-						subreddit: newSub,
+						subreddit: newSub || sub,
 						url: `https://www.reddit.com/r/${newSub}`,
 						posts: children,
 					};
 					subredditData.push(rData);
 					createSubreddit(rData);
 				}
+				subredditArr.add(newSub || sub);
 				setTimeout(() => {
 					dialog.style.visibility = "hidden";
 					dialog.style.opacity = 0;
@@ -75,6 +76,7 @@ async function fetchSubReddit(sub) {
 					inputBox.style.outline = "none";
 					inputBox.style.color = "black";
 					inputBox.value = "";
+					localStorage.setItem("subs", [...subredditArr]);
 				}, 500);
 			} else {
 				statusBox.style.visibility = "visible";
@@ -118,11 +120,22 @@ inputBox.addEventListener("input", (e) => {
 	} else {
 		inputBox.style.color = "black";
 	}
-	newSub = e.target.value;
-	if (e.target.value.trim() === "") {
-		newSubBtn.disabled = true;
+	const exists = [...subredditArr].some((sub) => sub === e.target.value);
+	if (!exists) {
+		newSub = e.target.value;
+		if (e.target.value.trim() === "") {
+			newSubBtn.disabled = true;
+		} else {
+			newSubBtn.disabled = false;
+		}
 	} else {
-		newSubBtn.disabled = false;
+		statusBox.textContent = `Subreddit already added!`;
+		inputBox.style.outline = "1px solid red";
+		inputBox.style.color = "red";
+		statusBox.style.visibility = "visible";
+		statusBox.style.color = "red";
+		statusBox.style.opacity = 1;
+		newSubBtn.disabled = true;
 	}
 });
 
@@ -155,12 +168,19 @@ newSubBtn.addEventListener("click", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-	if (subredditData.length === 0) {
-		subrFallback.style.visibility = "visible";
-		subrFallback.style.opacity = 1;
-	} else {
-		subrFallback.style.visibility = "hidden";
-		subrFallback.style.opacity = 0;
+	const saveFound = localStorage.getItem("subs");
+	if (saveFound) {
+		const localSubs = saveFound.split(",");
+		if (localSubs.length === 0) {
+			subrFallback.style.visibility = "visible";
+			subrFallback.style.opacity = 1;
+		} else {
+			localSubs.forEach((sub) => {
+				fetchSubReddit(sub);
+			});
+			subrFallback.style.visibility = "hidden";
+			subrFallback.style.opacity = 0;
+		}
 	}
 });
 
@@ -353,5 +373,7 @@ function removeSubreddit(subr) {
 			subrFallback.style.visibility = "visible";
 			subrFallback.style.opacity = 1;
 		}
+		//Removes the deleted item from localStorage
+		localStorage.setItem("subs", [...subredditArr]);
 	}, 250);
 }

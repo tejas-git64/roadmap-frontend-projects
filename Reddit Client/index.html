@@ -14,7 +14,7 @@
         <title>Reddit Client</title>
     </head>
 
-    <body>
+    <body class="dark-theme">
         <nav>
             <button type="button" class="add-btn">
                 <img src="./assets/plus-large-svgrepo-com.svg" alt="add-icon" id="add-icon" width="20" height="20">
@@ -33,11 +33,11 @@
                             Name of subreddit
                         </label>
                         <button type="button" class="close-btn">
-                            <img src="./assets/close-md-svgrepo-com.svg" alt="close-icon" width="20" height="18">
+                            <img src="./assets/close-md-svgrepo-com.svg" alt="close-icon" width="18" height="18">
                         </button>
                     </span>
                     <input type="text" name="subname" id="subname" placeholder="Enter the name of subreddit here"
-                        required>
+                        autocomplete="on" required>
                     <p class="status">this is not good</p>
                     <button type="submit" class="new-sub-btn">Add Subreddit</button>
                 </form>
