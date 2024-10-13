@@ -35,40 +35,52 @@ body {
 		}
 		.container {
 			width: 95%;
-			height: 90dvh;
+			height: 95dvh;
 			margin: 0 auto;
 			.subreddit-container {
 				width: 100%;
 				margin: 0 auto;
+				padding-bottom: 0;
 				.subreddit {
 					margin-right: 0;
 					width: 100%;
+					animation: Reveal 0.85s ease;
+					.post-container {
+						.posts {
+							li {
+								.post {
+									header {
+										width: 85%;
+									}
+								}
+							}
+						}
+						.loading {
+							.loading-post {
+								.loading-header {
+									width: 100%;
+									.loading-user {
+										width: 200px;
+									}
+									.loading-post {
+										width: 325px;
+									}
+								}
+							}
+						}
+					}
 				}
-			}
-		}
-		@keyframes fadeInRight {
-			0% {
-				visibility: hidden;
-				opacity: 0;
-				max-width: 165px;
-			}
-			100% {
-				visibility: visible;
-				opacity: 1;
-				max-width: 375px;
-			}
-		}
-
-		@keyframes fadeOutLeft {
-			0% {
-				visibility: visible;
-				opacity: 1;
-				max-width: 375px;
-			}
-			100% {
-				visibility: hidden;
-				opacity: 0;
-				max-width: 0px;
+				.removed {
+					animation: Hide 1.25s ease;
+				}
+				::-webkit-scrollbar {
+					height: 0px;
+					background: transparent;
+				}
+				::-webkit-scrollbar-thumb {
+					height: 0px;
+					background: transparent;
+				}
 			}
 		}
 	}
@@ -555,6 +567,7 @@ nav {
 					align-items: flex-start;
 					position: relative;
 					background-color: #e9e9e9;
+					margin-bottom: 500px;
 					li {
 						width: 100%;
 						height: auto;
@@ -735,5 +748,27 @@ nav {
 		visibility: hidden;
 		opacity: 0;
 		max-width: 0px;
+	}
+}
+
+@keyframes Reveal {
+	0% {
+		visibility: hidden;
+		opacity: 0;
+	}
+	100% {
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+@keyframes Hide {
+	0% {
+		visibility: visible;
+		opacity: 1;
+	}
+	100% {
+		visibility: hidden;
+		opacity: 0;
 	}
 }
