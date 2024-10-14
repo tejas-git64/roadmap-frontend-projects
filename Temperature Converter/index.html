@@ -15,6 +15,27 @@
     </head>
 
     <body>
+        <section class="temp-conv">
+            <h3>Temperature Converter</h3>
+            <p>Enter the temperature, select units and submit</p>
+            <form class="converter-form">
+                <input type="number" name="temp" id="temp" placeholder="Temp">
+                <select id="from_unit" required>
+                    <option value="">From unit</option>
+                    <option value="Fahrenheit">Fahrenheit</option>
+                    <option value="Celsius">Celsius</option>
+                    <option value="Kelvin">Kelvin</option>
+                </select>
+                <select id="to_unit" required>
+                    <option value="">To unit</option>
+                    <option value="Fahrenheit">Fahrenheit</option>
+                    <option value="Celsius">Celsius</option>
+                    <option value="Kelvin">Kelvin</option>
+                </select>
+                <button type="submit" class="convert-btn" disabled>Convert</button>
+            </form>
+            <p class="result"></p>
+        </section>
         <script src="./script.js"></script>
     </body>
 
