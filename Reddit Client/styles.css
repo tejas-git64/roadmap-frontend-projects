@@ -35,7 +35,7 @@ body {
 		}
 		.container {
 			width: 95%;
-			height: 95dvh;
+			height: 100%;
 			margin: 0 auto;
 			.subreddit-container {
 				width: 100%;
@@ -43,7 +43,7 @@ body {
 				padding-bottom: 0;
 				.subreddit {
 					margin-right: 0;
-					width: 100%;
+					width: 99.6%;
 					animation: Reveal 0.85s ease;
 					.post-container {
 						.posts {
@@ -425,7 +425,7 @@ nav {
 	}
 	.subreddit-container {
 		width: 100%;
-		height: 88dvh;
+		height: 85%;
 		max-height: 93.5%;
 		overflow: hidden;
 		background-color: transparent;
@@ -551,23 +551,24 @@ nav {
 			}
 			.post-container {
 				width: 100%;
-				height: 85dvh;
+				height: 100%;
 				margin: 0;
 				overflow: hidden;
 				position: relative;
+				padding-bottom: 0px;
 				.posts {
 					width: 100%;
-					height: 85dvh;
+					height: 100%;
 					margin: 0 auto;
 					display: flex;
 					overflow-y: scroll;
+					scroll-behavior: smooth;
 					overflow-x: hidden;
 					flex-direction: column;
 					justify-content: flex-start;
 					align-items: flex-start;
 					position: relative;
 					background-color: #e9e9e9;
-					margin-bottom: 500px;
 					li {
 						width: 100%;
 						height: auto;
