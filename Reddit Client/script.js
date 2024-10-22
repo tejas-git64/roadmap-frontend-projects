@@ -14,16 +14,42 @@ const subreddits = document.querySelectorAll(".subreddit");
 const subrFallback = document.querySelector(".subr-fallback");
 let subredditArr = new Set([]);
 
+function toggleStatus(status, error) {
+	if (status === "ready") {
+		statusBox.style.visibility = "hidden";
+		statusBox.style.opacity = 0;
+		statusBox.textContent = "";
+		statusBox.style.color = "black";
+		dialog.style.visibility = "hidden";
+		dialog.style.opacity = 0;
+		inputBox.style.outline = "none";
+		inputBox.style.color = "none";
+		inputBox.value = "";
+	}
+	if (status === "success") {
+		statusBox.style.visibility = "visible";
+		statusBox.style.opacity = 1;
+		statusBox.textContent = "Subreddit found!";
+		statusBox.style.color = "#00df56";
+		inputBox.style.outline = "1px solid #00df56";
+		inputBox.style.color = "#00df56";
+	}
+	if (status === "error") {
+		statusBox.style.visibility = "visible";
+		statusBox.style.opacity = 1;
+		inputBox.style.outline = "1px solid red";
+		inputBox.style.color = "red";
+		statusBox.style.color = "red";
+		statusBox.textContent = error;
+	}
+}
+
 async function fetchSubReddit(sub) {
 	if (sub) {
 		try {
 			const res = await fetch(`https://www.reddit.com/r/${sub}.json`);
 			if (!res.ok) {
-				statusBox.style.visibility = "visible";
-				statusBox.style.opacity = 1;
-				inputBox.style.outline = "1px solid red";
-				inputBox.style.color = "red";
-				statusBox.style.color = "red";
+				toggleStatus("error", "");
 				if (res.status === 404) {
 					statusBox.textContent = "This subreddit does not exist!";
 				}
@@ -57,12 +83,7 @@ async function fetchSubReddit(sub) {
 						subredditData[isFound].posts = children;
 						refreshPosts(subredditData[isFound]);
 					} else {
-						statusBox.style.visibility = "visible";
-						statusBox.style.opacity = 1;
-						statusBox.textContent = "Subreddit found!";
-						statusBox.style.color = "#00df56";
-						inputBox.style.outline = "1px solid #00df56";
-						inputBox.style.color = "#00df56";
+						toggleStatus("success", "");
 						const rData = {
 							subreddit: newSub || sub,
 							url: `https://www.reddit.com/r/${newSub}`,
@@ -74,28 +95,15 @@ async function fetchSubReddit(sub) {
 						createSubreddit(rData);
 					}
 					setTimeout(() => {
-						dialog.style.visibility = "hidden";
-						dialog.style.opacity = 0;
-						statusBox.textContent = "";
-						inputBox.style.outline = "none";
-						inputBox.style.color = "black";
-						inputBox.value = "";
+						toggleStatus("ready", "");
 					}, 500);
 				} else {
-					statusBox.style.visibility = "visible";
-					statusBox.style.opacity = 1;
-					statusBox.textContent = "No data found!";
-					inputBox.style.outline = "1px solid red";
-					inputBox.style.color = "red";
+					toggleStatus("error", "");
 				}
 			}
 		} catch (err) {
 			console.error(err);
-			statusBox.textContent = `Unexpected error: ${err}`;
-			inputBox.style.outline = "1px solid red";
-			inputBox.style.color = "red";
-			statusBox.style.visibility = "visible";
-			statusBox.style.opacity = 1;
+			toggleStatus("error", err);
 		}
 	}
 }
@@ -133,12 +141,7 @@ inputBox.addEventListener("input", (e) => {
 			newSubBtn.disabled = false;
 		}
 	} else {
-		statusBox.textContent = `Subreddit already added!`;
-		inputBox.style.outline = "1px solid red";
-		inputBox.style.color = "red";
-		statusBox.style.visibility = "visible";
-		statusBox.style.color = "red";
-		statusBox.style.opacity = 1;
+		toggleStatus("error", "Subreddit already added!");
 		newSubBtn.disabled = true;
 	}
 });
@@ -156,11 +159,7 @@ dialog.firstElementChild.addEventListener("submit", (e) => {
 	e.preventDefault();
 });
 closeBtn.addEventListener("click", () => {
-	dialog.style.visibility = "hidden";
-	dialog.style.opacity = 0;
-	inputBox.style.outline = "none";
-	inputBox.style.color = "none";
-	inputBox.value = "";
+	toggleStatus("ready", "");
 });
 newSubBtn.addEventListener("click", () => {
 	if (newSub.trim() !== "") {
@@ -195,18 +194,15 @@ window.addEventListener("DOMContentLoaded", () => {
 	if (saveFound && saveFound !== "") {
 		const localSubs = saveFound.split(",");
 		if (localSubs.length < 1) {
-			subrFallback.style.visibility = "visible";
-			subrFallback.style.opacity = 1;
+			toggleFallback(true);
 		} else {
 			localSubs.forEach((sub) => {
 				fetchSubReddit(sub);
 			});
-			subrFallback.style.visibility = "hidden";
-			subrFallback.style.opacity = 0;
+			toggleFallback(false);
 		}
 	} else {
-		subrFallback.style.visibility = "visible";
-		subrFallback.style.opacity = 1;
+		toggleFallback(true);
 		localStorage.setItem("subs", []);
 	}
 });
@@ -342,7 +338,7 @@ function createSubreddit(obj) {
 			loading.style.display = "flex";
 			setTimeout(() => {
 				loading.style.display = "none";
-			}, 1000);
+			}, 500);
 			fetchSubReddit(obj.subreddit);
 		});
 		const delBtn = document.createElement("button");
@@ -396,13 +392,11 @@ function createSubreddit(obj) {
 	setTimeout(() => {
 		subrContainer.scrollLeft =
 			subrContainer.scrollWidth - subrContainer.clientWidth;
-	}, 850);
+	}, 500);
 	if (subredditData.length > 0) {
-		subrFallback.style.visibility = "hidden";
-		subrFallback.style.opacity = 0;
+		toggleFallback(false);
 	}
 }
-
 function removeSubreddit(subr) {
 	const index = subredditData.findIndex((sub) => sub.subreddit === subr);
 	if (index === -1) {
@@ -415,12 +409,21 @@ function removeSubreddit(subr) {
 	const oldArr = [...subredditArr];
 	const i = oldArr.indexOf(subr);
 	oldArr.splice(i, 1);
-	subredditArr = oldArr;
+	subredditArr = new Set(oldArr);
 	updateLocalStorage(subr, 0);
 	setTimeout(() => {
-		if (subredditArr.length < 1) {
-			subrFallback.style.visibility = "visible";
-			subrFallback.style.opacity = 1;
+		if (subredditArr.size < 1) {
+			toggleFallback(true);
 		}
-	}, 250);
+	}, 100);
+}
+
+function toggleFallback(isToggled) {
+	if (isToggled) {
+		subrFallback.style.visibility = "visible";
+		subrFallback.style.opacity = 1;
+	} else {
+		subrFallback.style.visibility = "hidden";
+		subrFallback.style.opacity = 0;
+	}
 }
